@@ -1,0 +1,255 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MSN Store | Admin</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">
+    <span class="brand-mark">S</span>
+    <span>MSN store<small>ADMIN CONSOLE</small></span>
+  </a>
+  <a class="back-link" href="/">← Back to store</a>
+</header>
+
+<main class="container">
+
+  <section id="loginPanel" class="login-card">
+    <span class="eyebrow">STAFF ACCESS</span>
+    <h1>Admin sign in</h1>
+    <p>Manage MSN Store plans, orders and recharge requests.</p>
+    <form id="loginForm">
+      <label for="password">Admin password</label>
+      <input id="password" type="password"
+        autocomplete="current-password"
+        required placeholder="Enter admin password">
+      <button class="primary full" type="submit">Sign in →</button>
+      <p id="loginMessage" class="message" role="status"></p>
+    </form>
+    <div class="security-note">
+      Use the admin password configured on your server.
+    </div>
+  </section>
+
+  <section id="dashboardPanel" hidden>
+    <div class="page-heading">
+      <div>
+        <span class="eyebrow">MSN STORE OPERATIONS</span>
+        <h1>Admin dashboard</h1>
+        <p>Manage customer orders, recharge requests and SIM plans.</p>
+      </div>
+      <button id="logoutBtn" class="secondary">Sign out</button>
+    </div>
+
+    <div class="stats">
+      <article>
+        <span>Total orders</span>
+        <strong id="totalOrders">—</strong>
+        <small>All submitted requests</small>
+      </article>
+      <article>
+        <span>Pending orders</span>
+        <strong id="pendingOrders">—</strong>
+        <small>Awaiting action</small>
+      </article>
+      <article>
+        <span>Order value</span>
+        <strong id="orderValue">SAR —</strong>
+        <small>Demo order values</small>
+      </article>
+      <article>
+        <span>Plans in catalog</span>
+        <strong id="totalProducts">—</strong>
+        <small>Available plans</small>
+      </article>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="orders">Customer orders</button>
+      <button class="tab" data-tab="products">SIM plans</button>
+      <button class="tab" data-tab="recharges">Recharge requests</button>
+    </div>
+
+    <!-- CUSTOMER ORDERS -->
+    <section id="ordersTab" class="panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Customer orders</h2>
+          <p>Search orders and update their status.</p>
+        </div>
+        <button id="refreshOrders" class="secondary">↻ Refresh</button>
+      </div>
+
+      <div class="filters">
+        <input id="orderSearch"
+          placeholder="Search order ID, customer or mobile number">
+        <select id="orderStatus">
+          <option value="">All statuses</option>
+          <option>Pending</option>
+          <option>Confirmed</option>
+          <option>Completed</option>
+          <option>Cancelled</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Order</th><th>Customer</th><th>Plan</th>
+              <th>Amount</th><th>Created</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr><td colspan="6" class="empty">Loading orders…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SIM PLANS -->
+    <section id="productsTab" class="panel" hidden>
+      <div class="panel-heading">
+        <div>
+          <h2>SIM &amp; eSIM plans</h2>
+          <p>Manage the plans shown in the store.</p>
+        </div>
+        <button id="newProduct" class="primary">+ Add plan</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Plan</th><th>Category</th><th>Price</th>
+              <th>Data</th><th>Minutes</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsBody">
+            <tr><td colspan="6" class="empty">Loading plans…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RECHARGE REQUESTS -->
+    <section id="rechargesTab" class="panel" hidden>
+      <div class="panel-heading">
+        <div>
+          <h2>Recharge requests</h2>
+          <p>Search, review and export demo recharge records.</p>
+        </div>
+        <div class="panel-actions">
+          <button id="exportRecharges" class="primary">Export CSV ↓</button>
+          <button id="refreshRecharges" class="secondary">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div class="stats recharge-stats">
+        <article>
+          <span>Total requests</span>
+          <strong id="rechargeTotal">0</strong>
+          <small>Saved recharge records</small>
+        </article>
+        <article>
+          <span>Pending requests</span>
+          <strong id="rechargePending">0</strong>
+          <small>Awaiting review</small>
+        </article>
+        <article>
+          <span>Total requested value</span>
+          <strong id="rechargeValue">SAR 0.00</strong>
+          <small>Demo amounts, not payments</small>
+        </article>
+      </div>
+
+      <div class="filters recharge-filters">
+        <input id="rechargeSearch"
+          placeholder="Search mobile number or reference ID">
+        <select id="rechargeStatus">
+          <option value="">All statuses</option>
+          <option>Demo - Not Processed</option>
+          <option>Demo - Reviewed</option>
+          <option>Demo - Completed</option>
+          <option>Demo - Cancelled</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Recharge ID</th>
+              <th>Mobile number</th>
+              <th>Amount</th>
+              <th>Reference</th>
+              <th>Created</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="rechargesBody">
+            <tr><td colspan="6" class="empty">Loading recharge requests…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="security-note">
+        Demo mode only. These records do not initiate payments or real
+        mobile recharges. A status change is an administrative record only.
+      </p>
+    </section>
+
+    <p id="globalMessage" class="message" role="status"></p>
+  </section>
+</main>
+
+<!-- ADD / EDIT SIM PLAN -->
+<div id="productModal" class="overlay" hidden>
+  <section class="edit-card" role="dialog"
+    aria-modal="true" aria-labelledby="productModalTitle">
+    <button class="close" id="closeProduct" aria-label="Close">×</button>
+    <span class="eyebrow">CATALOG EDITOR</span>
+    <h2 id="productModalTitle">Add plan</h2>
+
+    <form id="productForm">
+      <input type="hidden" id="editId">
+
+      <label>Plan name<input id="pName" required></label>
+      <label>Category
+        <input id="pCategory" required
+          placeholder="MSN, Flex, Data, MSN Travel, Replacement">
+      </label>
+      <label>Description
+        <textarea id="pDescription" rows="3" required></textarea>
+      </label>
+
+      <div class="two-col">
+        <label>Price (SAR)
+          <input id="pPrice" type="number" min="0" step="0.01" required>
+        </label>
+        <label>Data allowance<input id="pData" required placeholder="33 GB"></label>
+      </div>
+
+      <div class="two-col">
+        <label>Minutes<input id="pMinutes" required placeholder="500 mins"></label>
+        <label>Badge (optional)<input id="pBadge" placeholder="TRENDING"></label>
+      </div>
+
+      <label class="checkbox-label">
+        <input id="pFeatured" type="checkbox">
+        Feature this plan on the homepage
+      </label>
+
+      <button class="primary full" type="submit">Save plan</button>
+      <p id="productMessage" class="message" role="status"></p>
+    </form>
+  </section>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

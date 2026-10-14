@@ -1,0 +1,228 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MSN Mobile | SIM & eSIM</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="header">
+  <a class="logo" href="#">
+    <span class="logo-mark">S</span>
+    <span>MSN store<small>YOUR CONNECTION, SIMPLIFIED</small></span>
+  </a>
+
+  <nav>
+    <a class="active" href="#shop">♧ &nbsp;Shop</a>
+    <a href="#shop">SIM & eSIM</a>
+    <a href="#recharge">Recharge</a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="cart" aria-label="Cart">
+      ♧ <span id="cartCount">0</span>
+    </button>
+    <button class="login" id="loginBtn">♙ &nbsp; Login</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- FEATURED PLAN -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="plan-label">MSN 90 · FEATURED PLAN</span>
+      <h1>103.50 <small>SAR</small></h1>
+      <p class="vat">incl. VAT · 4 weeks</p>
+
+      <div class="social">∞ &nbsp; Unlimited social</div>
+
+      <div class="hero-benefits">
+        <span>33 <small>GB</small></span>
+        <span>500 <small>Minutes</small></span>
+        <span class="share">♧ &nbsp; Share your data</span>
+      </div>
+    </div>
+
+    <div class="hero-product">
+      <div class="sim-graphic">
+        <span class="chip">▤</span>
+        <span>MSN Store<strong>90</strong></span>
+      </div>
+      <button class="order-featured" id="featuredOrder">
+        Order now &nbsp; →
+      </button>
+    </div>
+
+    <div class="hero-orb"></div>
+  </section>
+
+  <!-- SIM AND ESIM SHOP -->
+  <section class="shop" id="shop">
+    <div class="section-heading">
+      <span class="eyebrow">CHOOSE YOUR CONNECTION</span>
+      <h2>SIM & eSIM</h2>
+      <p>Compare plans, benefits and prices before you choose.</p>
+    </div>
+
+    <div class="toolbar">
+      <div class="filters" id="filters">
+        <button class="filter active" data-category="All">All</button>
+        <button class="filter" data-category="MSN">MSN</button>
+        <button class="filter" data-category="Flex">Flex</button>
+        <button class="filter" data-category="Data">Data</button>
+        <button class="filter" data-category="MSN Travel">MSN Travel</button>
+        <button class="filter" data-category="Replacement">Replacement</button>
+      </div>
+
+      <label class="search">
+        <span>⌕</span>
+        <input id="search" placeholder="Search plans..." aria-label="Search plans">
+      </label>
+    </div>
+
+    <div class="catalog-meta">
+      <span id="count">Loading plans…</span>
+      <label>
+        Sort by
+        <select id="sort">
+          <option value="featured">Recommended</option>
+          <option value="low">Price: low to high</option>
+          <option value="high">Price: high to low</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="products" id="products">
+      <div class="loading">Loading products from database…</div>
+    </div>
+  </section>
+
+  <!-- DEMO MOBILE RECHARGE -->
+  <section class="recharge" id="recharge">
+    <div>
+      <span class="eyebrow">MSN MOBILE RECHARGE</span>
+      <h2>Recharge your<br>number, your way.</h2>
+      <p>
+        Enter a mobile number and select an amount to create
+        a demo recharge request.
+      </p>
+      <p class="fineprint">
+        Demo only. No real payment or mobile recharge will occur.
+      </p>
+    </div>
+
+    <div class="recharge-card">
+      <div class="recharge-icon">↯</div>
+      <h3>Quick recharge</h3>
+
+      <form id="rechargeForm">
+        <label for="rechargePhone">Mobile number</label>
+        <input
+          id="rechargePhone"
+          type="tel"
+          placeholder="+966 5X XXX XXXX"
+          minlength="7"
+          maxlength="20"
+          autocomplete="tel"
+          required
+        >
+
+        <label for="rechargeAmount">Recharge amount (SAR)</label>
+        <select id="rechargeAmount" required>
+          <option value="">Choose amount</option>
+          <option value="10">SAR 10</option>
+          <option value="20">SAR 20</option>
+          <option value="30">SAR 30</option>
+          <option value="50">SAR 50</option>
+          <option value="100">SAR 100</option>
+          <option value="200">SAR 200</option>
+        </select>
+
+        <button type="submit" class="submit">
+          Submit recharge request →
+        </button>
+      </form>
+
+      <p id="rechargeMessage" role="status" aria-live="polite"></p>
+
+      <button type="button" id="rechargeHistory">
+        View previous recharge requests
+      </button>
+
+      <div id="rechargeResults" aria-live="polite"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <a class="logo" href="#">
+    <span class="logo-mark">S</span>
+    <span>MSN store</span>
+  </a>
+  <span>Demo store · Prices shown in SAR</span>
+  <span>© <span id="year"></span> MSN Store</span>
+</footer>
+
+<!-- EXISTING PLAN ORDER MODAL -->
+<div class="backdrop" id="modal" hidden>
+  <section
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+  >
+    <button class="close" id="close" aria-label="Close">×</button>
+
+    <span class="eyebrow">PLAN DETAILS</span>
+    <h2 id="modalTitle">Choose a plan</h2>
+    <p id="modalDescription"></p>
+    <div class="modal-price" id="modalPrice"></div>
+
+    <form id="orderForm">
+      <input id="productId" type="hidden">
+
+      <label for="customerName">Full name</label>
+      <input id="customerName" required placeholder="Your name">
+
+      <label for="phone">Mobile number to search or recharge</label>
+      <input
+        id="phone"
+        type="tel"
+        required
+        minlength="7"
+        placeholder="+966 5X XXX XXXX"
+      >
+
+      <button class="lookup-button" type="button" id="lookupOrders">
+        Search previous orders for this number
+      </button>
+
+      <button class="submit" type="submit">
+        Create order →
+      </button>
+
+      <p class="fineprint">
+        Demo only. No payment, SIM activation or real order fulfilment.
+      </p>
+
+      <p id="orderMessage" role="status"></p>
+      <div id="lookupResults" class="lookup-results" role="status"></div>
+    </form>
+  </section>
+</div>
+
+<!-- ADMIN LINK -->
+<a href="/admin.html">Admin</a>
+
+<!-- EXISTING SHOP JAVASCRIPT -->
+<script src="app.js"></script>
+
+</body>
+</html>
+```
